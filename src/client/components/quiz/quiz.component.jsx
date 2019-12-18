@@ -3,6 +3,8 @@ import BooleanForm from '../question/boolean-q-form.component';
 import MultipleForm from '../question/multiple-q-form.component';
 import InputForm from '../question/input-q-form.component';
 
+import './quiz.css';
+
 export default class Quiz extends Component {
   constructor() {
     super();
@@ -49,9 +51,9 @@ export default class Quiz extends Component {
     if (activeQuestion.type === 'multiple') {
       return <MultipleForm props={activeQuestion} />;
     } else if (activeQuestion.type === 'boolean') {
-      return <BooleanForm props={activeQuestion} />;
+      return <BooleanForm />;
     } else {
-      return <InputForm props={activeQuestion} />;
+      return <InputForm />;
     }
   };
 
@@ -59,20 +61,13 @@ export default class Quiz extends Component {
     let { activeQuestion } = this.state;
     return (
       <div className="quiz-container">
-        <span>
-          {activeQuestion ? this.renderQuestionForm(activeQuestion) : null}
-        </span>
+        {activeQuestion ? (
+          <>
+            <h3>{activeQuestion.question}</h3>
+            <div>{this.renderQuestionForm(activeQuestion)}</div>
+          </>
+        ) : null}
       </div>
     );
   }
 }
-// {
-//   "type":"multiple",
-//   "question":"Which game did &quot;Sonic The Hedgehog&quot; make his first appearance in?",
-//   "correct_answer":"Rad Mobile",
-//   "incorrect_answers":[
-//     "Sonic The Hedgehog",
-//     "Super Mario 64",
-//     "Mega Man"
-//   ]
-// }

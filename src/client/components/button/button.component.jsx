@@ -5,7 +5,7 @@ import './button.css';
 const CustomButton = ({ children, ...otherProps }) => {
   return (
     <button className="custom-button" {...otherProps}>
-      {children}
+      Next
     </button>
   );
 };
