@@ -1,4 +1,7 @@
 import React, { Component } from 'react';
+import BooleanForm from '../question/boolean-q-form.component';
+import MultipleForm from '../question/multiple-q-form.component';
+import InputForm from '../question/input-q-form.component';
 
 export default class Quiz extends Component {
   constructor() {
@@ -22,7 +25,7 @@ export default class Quiz extends Component {
       .then(() => this.setActiveQuestion());
   }
 
-  setActiveQuestion() {
+  setActiveQuestion = () => {
     let { count, questionList, activeQuestion } = this.state;
     if (count < 5 || null) {
       this.setState({
@@ -31,19 +34,45 @@ export default class Quiz extends Component {
         questionList: questionList,
       });
     }
-  }
+  };
 
   //Fisher-Yates randomization to randomize the Arr in o(n) time
-  randomizeArr(inputArr) {
+  randomizeArr = inputArr => {
     for (let i = inputArr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       //ES6 syntax to swap 2 variables at the same time
       [inputArr[i], inputArr[j]] = [inputArr[j], inputArr[i]];
     }
-  }
+  };
+
+  renderQuestionForm = activeQuestion => {
+    if (activeQuestion.type === 'multiple') {
+      return <MultipleForm props={activeQuestion} />;
+    } else if (activeQuestion.type === 'boolean') {
+      return <BooleanForm props={activeQuestion} />;
+    } else {
+      return <InputForm props={activeQuestion} />;
+    }
+  };
 
   render() {
     let { activeQuestion } = this.state;
-    return <div className="quiz-container"></div>;
+    return (
+      <div className="quiz-container">
+        <span>
+          {activeQuestion ? this.renderQuestionForm(activeQuestion) : null}
+        </span>
+      </div>
+    );
   }
 }
+// {
+//   "type":"multiple",
+//   "question":"Which game did &quot;Sonic The Hedgehog&quot; make his first appearance in?",
+//   "correct_answer":"Rad Mobile",
+//   "incorrect_answers":[
+//     "Sonic The Hedgehog",
+//     "Super Mario 64",
+//     "Mega Man"
+//   ]
+// }
