@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import BooleanForm from '../question/boolean-q-form.component';
 import MultipleForm from '../question/multiple-q-form.component';
 import InputForm from '../question/input-q-form.component';
 
@@ -47,11 +46,18 @@ export default class Quiz extends Component {
     }
   };
 
+  //write a handle submit function here and pass it into each of the questions for the button to perform the proper action, also pass down what the button should say on it: start, next or retry depending on state
   renderQuestionForm = activeQuestion => {
-    if (activeQuestion.type === 'multiple') {
-      return <MultipleForm props={activeQuestion} />;
-    } else if (activeQuestion.type === 'boolean') {
-      return <BooleanForm />;
+    if (
+      activeQuestion.type === 'multiple' ||
+      activeQuestion.type === 'boolean'
+    ) {
+      return (
+        <MultipleForm
+          activeQuestion={activeQuestion}
+          randomizeArr={this.randomizeArr}
+        />
+      );
     } else {
       return <InputForm />;
     }

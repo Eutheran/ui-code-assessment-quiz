@@ -4,3 +4,7 @@ h3 {
   color: #4d4c4c;
   margin: 8px 0px;
 }
+
+.quiz-container {
+  width: 600px;
+}
