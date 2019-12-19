@@ -68,11 +68,13 @@ export default class Quiz extends Component {
       this.setState({
         count: this.state.count + 1,
         correct: this.state.correct + 1,
+        userAnswer: null,
       });
     } else {
       this.setState({
         count: this.state.count + 1,
         incorrect: this.state.incorrect + 1,
+        userAnswer: null,
       });
     }
     this.setActiveQuestion();
@@ -84,12 +86,19 @@ export default class Quiz extends Component {
       activeQuestion.type === 'multiple' ||
       activeQuestion.type === 'boolean'
     ) {
+      //randomize answers for multi choice questions
+      let answers = [
+        ...this.state.activeQuestion.incorrect_answers,
+        this.state.activeQuestion.correct_answer,
+      ];
+      this.randomizeArr(answers);
       return (
         <MultipleForm
           activeQuestion={activeQuestion}
           randomizeArr={this.randomizeArr}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
+          answers={answers}
         />
       );
     } else {

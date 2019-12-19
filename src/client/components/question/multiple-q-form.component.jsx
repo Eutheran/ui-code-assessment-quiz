@@ -35,26 +35,20 @@ const MultipleForm = props => {
       </div>
     );
   } else {
-    //randomize answers for multi choice questions
-    let answers = [
-      ...props.activeQuestion.incorrect_answers,
-      props.activeQuestion.correct_answer,
-    ];
-    props.randomizeArr(answers);
     return (
       <div className="question-container">
         <form onSubmit={props.handleSubmit}>
-          {answers.map((answer, idx) => {
+          {props.answers.map((choice, idx) => {
             return (
               <div className="radio-box" key={idx}>
                 <label>
                   <input
                     type="radio"
-                    name="multiChoice"
-                    value={answer}
+                    name="multiple"
+                    value={choice}
                     onChange={props.handleChange}
                   />
-                  <span>{answer}</span>
+                  <span>{choice}</span>
                 </label>
               </div>
             );
