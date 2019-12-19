@@ -10,13 +10,23 @@ const MultipleForm = props => {
         <form>
           <div className="radio-box">
             <label>
-              <input type="radio" value="true" />
+              <input
+                type="radio"
+                name="trueFalse"
+                value="true"
+                onChange={props.handleChange}
+              />
               <span>True</span>
             </label>
           </div>
           <div className="radio-box">
             <label>
-              <input type="radio" value="false" />
+              <input
+                type="radio"
+                name="trueFalse"
+                value="false"
+                onChange={props.handleChange}
+              />
               <span>False</span>
             </label>
           </div>
@@ -37,7 +47,12 @@ const MultipleForm = props => {
             return (
               <div className="radio-box" key={idx}>
                 <label>
-                  <input type="radio" value={answer} />
+                  <input
+                    type="radio"
+                    name="multiChoice"
+                    value={answer}
+                    onChange={props.handleChange}
+                  />
                   <span>{answer}</span>
                 </label>
               </div>

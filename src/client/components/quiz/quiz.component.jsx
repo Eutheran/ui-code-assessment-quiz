@@ -10,6 +10,7 @@ export default class Quiz extends Component {
     this.state = {
       questionList: [],
       activeQuestion: null,
+      userAnswer: null,
       count: 0,
       questionResults: { correct: 0, incorrect: 0, total: 0 },
     };
@@ -46,6 +47,15 @@ export default class Quiz extends Component {
     }
   };
 
+  handleChange = event => {
+    this.setState({ userAnswer: event.target.value });
+  };
+
+  //havent done anything here, still working on my handle submit
+  handleSubmit = event => {
+    event.preventDefault();
+  };
+
   //write a handle submit function here and pass it into each of the questions for the button to perform the proper action, also pass down what the button should say on it: start, next or retry depending on state
   renderQuestionForm = activeQuestion => {
     if (
@@ -56,10 +66,17 @@ export default class Quiz extends Component {
         <MultipleForm
           activeQuestion={activeQuestion}
           randomizeArr={this.randomizeArr}
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
         />
       );
     } else {
-      return <InputForm />;
+      return (
+        <InputForm
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+        />
+      );
     }
   };
 
