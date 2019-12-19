@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import MultipleForm from '../question/multiple-q-form.component';
 import InputForm from '../question/input-q-form.component';
+import Summary from '../summary/summary.component';
 
 import './quiz.css';
 
@@ -12,7 +13,8 @@ export default class Quiz extends Component {
       activeQuestion: null,
       userAnswer: null,
       count: 0,
-      questionResults: { correct: 0, incorrect: 0, total: 0 },
+      correct: 0,
+      incorrect: 0,
     };
   }
 
@@ -28,14 +30,10 @@ export default class Quiz extends Component {
   }
 
   setActiveQuestion = () => {
-    let { count, questionList, activeQuestion } = this.state;
-    if (count < 5 || null) {
-      this.setState({
-        count: count++,
-        activeQuestion: questionList.pop(),
-        questionList: questionList,
-      });
-    }
+    this.setState({
+      activeQuestion: this.state.questionList.pop(),
+      questionList: this.state.questionList,
+    });
   };
 
   //Fisher-Yates randomization to randomize the Arr in o(n) time
@@ -47,16 +45,40 @@ export default class Quiz extends Component {
     }
   };
 
+  //to change all variables back to default but keep track of the non-used questions
+  resetState = () => {
+    this.setState({
+      questionList: [...this.state.questionList],
+      activeQuestion: null,
+      userAnswer: null,
+      count: 0,
+      correct: 0,
+      incorrect: 0,
+    });
+    this.setActiveQuestion();
+  };
+
   handleChange = event => {
     this.setState({ userAnswer: event.target.value });
   };
 
-  //havent done anything here, still working on my handle submit
   handleSubmit = event => {
     event.preventDefault();
+    if (this.state.activeQuestion.correct_answer === this.state.userAnswer) {
+      this.setState({
+        count: this.state.count + 1,
+        correct: this.state.correct + 1,
+      });
+    } else {
+      this.setState({
+        count: this.state.count + 1,
+        incorrect: this.state.incorrect + 1,
+      });
+    }
+    this.setActiveQuestion();
   };
 
-  //write a handle submit function here and pass it into each of the questions for the button to perform the proper action, also pass down what the button should say on it: start, next or retry depending on state
+  //renders proper component depending on question type
   renderQuestionForm = activeQuestion => {
     if (
       activeQuestion.type === 'multiple' ||
@@ -81,15 +103,28 @@ export default class Quiz extends Component {
   };
 
   render() {
-    let { activeQuestion } = this.state;
+    let { activeQuestion, count } = this.state;
     return (
       <div className="quiz-container">
-        {activeQuestion ? (
+        {activeQuestion && count < 5 ? (
           <>
             <h3>{activeQuestion.question}</h3>
             <div>{this.renderQuestionForm(activeQuestion)}</div>
           </>
         ) : null}
+        <>
+          {/* returns summary page if 5 questions have been answered */}
+          {count === 5 ? (
+            <Summary
+              score={{
+                count: this.state.count,
+                correct: this.state.correct,
+                incorrect: this.state.incorrect,
+              }}
+              resetState={this.resetState}
+            />
+          ) : null}
+        </>
       </div>
     );
   }

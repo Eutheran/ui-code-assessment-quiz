@@ -3,11 +3,11 @@ import CustomButton from '../button/button.component';
 import './question-style.css';
 
 const MultipleForm = props => {
-  //check if bool
+  //check if boolean question
   if (props.activeQuestion.incorrect_answers.length === 1) {
     return (
       <div className="question-container">
-        <form>
+        <form onSubmit={props.handleSubmit}>
           <div className="radio-box">
             <label>
               <input
@@ -30,11 +30,12 @@ const MultipleForm = props => {
               <span>False</span>
             </label>
           </div>
+          <CustomButton type="submit" name={'NEXT'} />
         </form>
-        <CustomButton />
       </div>
     );
   } else {
+    //randomize answers for multi choice questions
     let answers = [
       ...props.activeQuestion.incorrect_answers,
       props.activeQuestion.correct_answer,
@@ -42,7 +43,7 @@ const MultipleForm = props => {
     props.randomizeArr(answers);
     return (
       <div className="question-container">
-        <form>
+        <form onSubmit={props.handleSubmit}>
           {answers.map((answer, idx) => {
             return (
               <div className="radio-box" key={idx}>
@@ -58,22 +59,11 @@ const MultipleForm = props => {
               </div>
             );
           })}
+          <CustomButton type="submit" name={'NEXT'} />
         </form>
-        <CustomButton />
       </div>
     );
   }
 };
 
 export default MultipleForm;
-
-// {
-//   "type":"multiple",
-//   "question":"Which game did &quot;Sonic The Hedgehog&quot; make his first appearance in?",
-//   "correct_answer":"Rad Mobile",
-//   "incorrect_answers":[
-//     "Sonic The Hedgehog",
-//     "Super Mario 64",
-//     "Mega Man"
-//   ]
-// }

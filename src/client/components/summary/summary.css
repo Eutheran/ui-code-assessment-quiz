@@ -1,0 +1,20 @@
+.summary-container {
+  display: flex;
+  flex-direction: column;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: lighter;
+  font-size: 16px;
+}
+
+.summary-span {
+  display: flex;
+  flex-direction: column;
+  padding: 0px;
+  margin-bottom: 4px;
+}
+
+#summary-h2 {
+  color: black;
+  font-weight: 900;
+  margin-bottom: 20px;
+}

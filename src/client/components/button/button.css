@@ -1,5 +1,6 @@
 .custom-button {
-  width: 70px;
+  min-width: 70px;
+  max-width: 120px;
   height: 35px;
   margin-top: 20px;
   font-size: 12px;
