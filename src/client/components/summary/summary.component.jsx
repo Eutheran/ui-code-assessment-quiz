@@ -2,7 +2,7 @@ import React from 'react';
 import CustomButton from '../button/button.component';
 import './summary.css';
 
-//NEED TO BOLD THE NUMBERS THAT RETURN
+//NEED TO BOLD THE NUMBERS THAT RETURN CORRECT WRONG QAs FINAL SCORE
 function Summary(props) {
   return (
     <div className="summary-container">
