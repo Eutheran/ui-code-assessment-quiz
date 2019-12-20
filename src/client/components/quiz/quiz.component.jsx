@@ -41,13 +41,10 @@ export default class Quiz extends Component {
       activeQuestion.userChoices = userChoices;
     }
 
-    this.setState(
-      {
-        activeQuestion,
-        questionList: this.state.questionList,
-      },
-      () => console.log(this.state)
-    );
+    this.setState({
+      activeQuestion,
+      questionList: this.state.questionList,
+    });
   };
 
   //Fisher-Yates randomization to randomize the Arr in o(n) time
