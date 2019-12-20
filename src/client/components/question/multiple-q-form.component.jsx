@@ -38,7 +38,7 @@ const MultipleForm = props => {
     return (
       <div className="question-container">
         <form onSubmit={props.handleSubmit}>
-          {props.answers.map((choice, idx) => {
+          {props.activeQuestion.userChoices.map((choice, idx) => {
             return (
               <div className="radio-box" key={idx}>
                 <label>
@@ -46,6 +46,7 @@ const MultipleForm = props => {
                     type="radio"
                     name="multiple"
                     value={choice}
+                    checked={props.userAnswer === choice}
                     onChange={props.handleChange}
                   />
                   <span>{choice}</span>

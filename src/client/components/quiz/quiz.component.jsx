@@ -30,10 +30,24 @@ export default class Quiz extends Component {
   }
 
   setActiveQuestion = () => {
-    this.setState({
-      activeQuestion: this.state.questionList.pop(),
-      questionList: this.state.questionList,
-    });
+    let activeQuestion = this.state.questionList.pop();
+    //randomize answers for multi choice questions
+    if (activeQuestion.type === 'multiple') {
+      let userChoices = [
+        ...activeQuestion.incorrect_answers,
+        activeQuestion.correct_answer,
+      ];
+      this.randomizeArr(userChoices);
+      activeQuestion.userChoices = userChoices;
+    }
+
+    this.setState(
+      {
+        activeQuestion,
+        questionList: this.state.questionList,
+      },
+      () => console.log(this.state)
+    );
   };
 
   //Fisher-Yates randomization to randomize the Arr in o(n) time
@@ -86,19 +100,12 @@ export default class Quiz extends Component {
       activeQuestion.type === 'multiple' ||
       activeQuestion.type === 'boolean'
     ) {
-      //randomize answers for multi choice questions
-      let answers = [
-        ...this.state.activeQuestion.incorrect_answers,
-        this.state.activeQuestion.correct_answer,
-      ];
-      this.randomizeArr(answers);
       return (
         <MultipleForm
           activeQuestion={activeQuestion}
-          randomizeArr={this.randomizeArr}
+          userAnswer={this.state.userAnswer}
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-          answers={answers}
         />
       );
     } else {
