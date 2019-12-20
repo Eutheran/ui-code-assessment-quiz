@@ -17,7 +17,7 @@ export default class Quiz extends Component {
       incorrect: 0,
     };
   }
-  //FIX WHY THE QUESTIONS KEEP SCRAMBLING WHEN RADIO IS SELECTED!!!!!
+
   componentDidMount() {
     fetch('http://localhost:4000/api/questions')
       .then(res => res.json())
